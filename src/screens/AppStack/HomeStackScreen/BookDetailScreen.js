@@ -13,6 +13,8 @@ import BookCard from '../../../components/BookCard';
 
 import {Text} from '@ui-kitten/components';
 import BookImage from '../../../components/BookDetailScreen/BookImage';
+import AddToBookShelf from '../../../components/BookDetailScreen/AddToBookShelf';
+import MoreFromAuthor from '../../../components/BookDetailScreen/MoreFromAuthor';
 
 const {width, height} = Dimensions.get('window');
 
@@ -30,6 +32,8 @@ const BookDetailScreen = () => {
     <SafeAreaView>
       <KeyboardAvoidingView>
         <BookImage book={book} />
+        {/* <MoreFromAuthor author={book.authors} /> */}
+        <AddToBookShelf />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

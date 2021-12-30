@@ -64,7 +64,7 @@ const BookCard = ({book}) => {
             </View>
           </View>
         </View>
-        <View
+        {/* <View
           style={{
             flex: 1,
             alignItems: 'center',
@@ -77,7 +77,7 @@ const BookCard = ({book}) => {
           <Text status="success" category="p1">
             Available
           </Text>
-        </View>
+        </View> */}
       </View>
     </TouchableOpacity>
   );

@@ -12,9 +12,6 @@ import BookCard from '../../../components/BookCard';
 import BookList from '../../../components/BookList';
 
 const HomeScreen = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const shouldLoadComponent = index => index === selectedIndex;
-
   return (
     <SafeAreaView style={styles.container}>
       <BookList />

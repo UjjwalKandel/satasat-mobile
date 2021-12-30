@@ -128,7 +128,7 @@ const LoginScreen = ({route}) => {
                       <Spinner status="primary" size="small" />
                     </View>
                   ) : (
-                    <Text>Sign Up</Text>
+                    <Text>Sign In</Text>
                   )}
                 </Button>
                 <CustomDivider />
