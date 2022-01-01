@@ -1,11 +1,22 @@
 import {Button} from '@ui-kitten/components';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
-const AddToBookShelf = () => {
+import {Text} from '@ui-kitten/components';
+
+const AddToBookShelf = ({disableAddToShelf, onPress}) => {
   return (
-    <View>
-      <Button>Add to BookShelf</Button>
+    <View style={{alignItems: 'center', width: '100%', padding: 20}}>
+      <Button
+        disabled={disableAddToShelf}
+        onPress={onPress}
+        style={{width: '90%'}}>
+        {disableAddToShelf ? (
+          <Text status="success">Book available in shelf</Text>
+        ) : (
+          <Text>Add to bookshelf</Text>
+        )}
+      </Button>
     </View>
   );
 };

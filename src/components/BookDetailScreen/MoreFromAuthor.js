@@ -28,15 +28,16 @@ const MoreFromAuthor = ({author}) => {
   if (!author) {
     return null;
   }
+
+  const renderItem = ({item}) => <BookCard book={item} />;
   return (
-    <View>
-      <FlatList
-        data={moreBooks}
-        renderItem={(item, index) => <BookCard book={item} />}
-        keyExtractor={(item, index) => index.toString()}
-        // horizontal
-      />
-    </View>
+    <FlatList
+      data={moreBooks}
+      renderItem={renderItem}
+      keyExtractor={(item, index) => index.toString()}
+      ItemSeparatorComponent={({highlighted}) => <View style={{height: 10}} />}
+      // horizontal
+    />
   );
 };
 
