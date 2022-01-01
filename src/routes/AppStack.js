@@ -6,7 +6,9 @@ import {Icon} from '@ui-kitten/components';
 
 import {HomeStackScreen} from '../screens/AppStack/HomeStackScreen';
 import SettingsScreen from '../screens/AppStack/SettingsScreen';
-import BookShelfScreen from '../screens/AppStack/BookShelfScreen';
+import {BookShelfStackScreen} from '../screens/AppStack/BookShelfStackScreen';
+import {BorrowStackScreen} from '../screens/AppStack/BorrowStackScreen';
+// import BookShelfScreen from '../screens/AppStack/BookShelfStackScreen/BookShelfScreen';
 // import ExploreScreen from '../screens/AppStack/ExploreScreen';
 // import SettingsScreen from '../screens/AppStack/SettingsScreen';
 // import SearchScreen from '../screens/AppStack/SearchScreen';
@@ -82,14 +84,29 @@ export const AppStack = () => {
         })}
       /> */}
       <BottomTabs.Screen
-        name="BookShelf"
-        component={BookShelfScreen}
+        name="BookShelfStackScreen"
+        component={BookShelfStackScreen}
         options={({route}) => ({
           tabBarIcon: ({focused}) => {
             return (
               <Icon
                 style={{height: 24, width: 24}}
-                name={focused ? 'person' : 'person-outline'}
+                name={focused ? 'book' : 'book-outline'}
+                fill={focused ? '#FFCD00' : '#000'}
+              />
+            );
+          },
+        })}
+      />
+      <BottomTabs.Screen
+        name="BorrowStackScreen"
+        component={BorrowStackScreen}
+        options={({route}) => ({
+          tabBarIcon: ({focused}) => {
+            return (
+              <Icon
+                style={{height: 24, width: 24}}
+                name={focused ? 'grid' : 'grid-outline'}
                 fill={focused ? '#FFCD00' : '#000'}
               />
             );

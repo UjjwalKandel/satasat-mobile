@@ -1,17 +1,26 @@
 import {Spinner} from '@ui-kitten/components';
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import BookCard from '../../components/BookCard';
-import {useAuth} from '../../contexts/Auth';
-import {baseUrl} from '../../services/AuthService';
+import BookCard from '../../../components/BookCard';
+import {useAuth} from '../../../contexts/Auth';
+import {baseUrl} from '../../../services/AuthService';
 
 const BookShelfScreen = () => {
+  const route = useRoute();
   const auth = useAuth();
   const [loading, setLoading] = useState(false);
   const [books, setBooks] = useState([]);
   const [page, setPage] = useState(1);
   const [pageEnd, setPageEnd] = useState(false);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getBooks();
+    }, [route.params]),
+  );
 
   useEffect(() => {
     getBooks();
@@ -54,7 +63,7 @@ const BookShelfScreen = () => {
     );
   }
   return (
-    <View style={{width: '100%'}}>
+    <View style={{width: '100%', paddingVertical: '5%'}}>
       <FlatList
         data={books}
         renderItem={renderItem}

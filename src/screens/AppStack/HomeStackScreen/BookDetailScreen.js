@@ -100,7 +100,7 @@ const BookDetailScreen = () => {
           onPress={addToShelf}
         />
 
-        <BorrowAvailability book={book} />
+        {/* <BorrowAvailability book={book} /> */}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  ScrollView,
 } from 'react-native';
 
 import {Formik, Field} from 'formik';
@@ -70,6 +71,8 @@ const SignUpScreen = ({navigation}) => {
       .string()
       .oneOf([yup.ref('password')], 'Passwords do not match')
       .required('Confirm password is required'),
+    gender: yup.string().required('Gender is required'),
+    address: yup.string().required('Address is required'),
   });
 
   const signUpSubmitHandler = async values => {
@@ -81,10 +84,8 @@ const SignUpScreen = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView
-      style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <KeyboardAvoidingView
-        style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
+    <KeyboardAvoidingView style={{flexGrow: 1, alignItems: 'center'}}>
+      <ScrollView bounces={false}>
         <Formik
           validateOnMount={true}
           initialValues={{
@@ -94,6 +95,8 @@ const SignUpScreen = ({navigation}) => {
             phoneNo: '',
             password: '',
             confirmPassword: '',
+            gender: '',
+            address: '',
           }}
           validationSchema={signUpValidationSchema}
           onSubmit={async (values, actions) => {
@@ -108,7 +111,7 @@ const SignUpScreen = ({navigation}) => {
             }
           }}>
           {({handleSubmit, isValid, isSubmitting}) => (
-            <>
+            <View style={{alignItems: 'center'}}>
               <Field
                 component={CustomInput}
                 name="fullName"
@@ -145,6 +148,16 @@ const SignUpScreen = ({navigation}) => {
                 secureTextEntry={hidePasswordTwo}
                 accessoryRight={renderIconTwo}
               />
+              <Field
+                component={CustomInput}
+                name="gender"
+                placeholder="Gender"
+              />
+              <Field
+                component={CustomInput}
+                name="address"
+                placeholder="Full Address"
+              />
               <Button
                 style={{minWidth: '95%'}}
                 onPress={handleSubmit}
@@ -157,11 +170,11 @@ const SignUpScreen = ({navigation}) => {
                   <Text>Register</Text>
                 )}
               </Button>
-            </>
+            </View>
           )}
         </Formik>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
