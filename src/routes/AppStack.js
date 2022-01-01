@@ -6,6 +6,7 @@ import {Icon} from '@ui-kitten/components';
 
 import {HomeStackScreen} from '../screens/AppStack/HomeStackScreen';
 import SettingsScreen from '../screens/AppStack/SettingsScreen';
+import BookShelfScreen from '../screens/AppStack/BookShelfScreen';
 // import ExploreScreen from '../screens/AppStack/ExploreScreen';
 // import SettingsScreen from '../screens/AppStack/SettingsScreen';
 // import SearchScreen from '../screens/AppStack/SearchScreen';
@@ -80,6 +81,21 @@ export const AppStack = () => {
           },
         })}
       /> */}
+      <BottomTabs.Screen
+        name="BookShelf"
+        component={BookShelfScreen}
+        options={({route}) => ({
+          tabBarIcon: ({focused}) => {
+            return (
+              <Icon
+                style={{height: 24, width: 24}}
+                name={focused ? 'person' : 'person-outline'}
+                fill={focused ? '#FFCD00' : '#000'}
+              />
+            );
+          },
+        })}
+      />
       <BottomTabs.Screen
         name="Settings"
         component={SettingsScreen}

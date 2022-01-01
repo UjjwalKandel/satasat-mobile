@@ -73,6 +73,7 @@ const BookList = ({searchItem}) => {
 
   const getBooks = () => {
     if (!loading && !pageEnd) {
+      // setLoading(true);
       const url = search
         ? `${baseUrl}/books?page=${page}&limit=15&search=${search}`
         : `${baseUrl}/books?page=${page}&limit=15`;
@@ -146,7 +147,11 @@ const BookList = ({searchItem}) => {
   };
 
   if (loading) {
-    return <Spinner size="giant" />;
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Spinner size="giant" />
+      </View>
+    );
   }
 
   return (

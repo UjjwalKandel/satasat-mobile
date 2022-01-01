@@ -8,6 +8,7 @@ const AuthContext = createContext();
 const AuthProvider = ({children}) => {
   const [authData, setAuthData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     loadStorageData();
@@ -28,6 +29,7 @@ const AuthProvider = ({children}) => {
           await signOut();
         } else {
           setAuthData(_authData);
+          setUserId(decodedJwt.userId);
           //print jwt to use in Swagger
           console.log(_authData);
         }
@@ -74,7 +76,8 @@ const AuthProvider = ({children}) => {
   };
 
   return (
-    <AuthContext.Provider value={{authData, loading, signIn, signOut, signUp}}>
+    <AuthContext.Provider
+      value={{authData, userId, loading, signIn, signOut, signUp}}>
       {children}
     </AuthContext.Provider>
   );

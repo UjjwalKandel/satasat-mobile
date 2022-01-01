@@ -1,5 +1,5 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,21 +8,83 @@ import {
   KeyboardAvoidingView,
   Dimensions,
 } from 'react-native';
+import {Text} from '@ui-kitten/components';
+import axios from 'axios';
+
+import {baseUrl} from '../../../services/AuthService';
 import {Loading} from '../../../components/Loading';
 import BookCard from '../../../components/BookCard';
 
-import {Text} from '@ui-kitten/components';
 import BookImage from '../../../components/BookDetailScreen/BookImage';
 import AddToBookShelf from '../../../components/BookDetailScreen/AddToBookShelf';
 import MoreFromAuthor from '../../../components/BookDetailScreen/MoreFromAuthor';
+import {useAuth} from '../../../contexts/Auth';
+import BorrowAvailability from '../../../components/BookDetailScreen/BorrowAvailability';
 
 const {width, height} = Dimensions.get('window');
 
 const BookDetailScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
-
+  const auth = useAuth();
   const book = route.params.book;
+
+  const [userShelf, setUserShelf] = useState([]);
+  const [disableAddToShelf, setDisableAddToShelf] = useState();
+  const [addToShelfVisible, setAddToShelfVisible] = useState(false);
+
+  useEffect(() => {
+    userShelf.forEach(item => {
+      if (item.id === book.id) {
+        setDisableAddToShelf(true);
+      }
+    });
+    if (disableAddToShelf === true) {
+      setDisableAddToShelf(false);
+    }
+  }, [userShelf]);
+
+  useEffect(() => {
+    console.log(auth.userId, 'userId');
+    axios
+      .get(`${baseUrl}/book-shelf?userId=${auth.userId}`, {
+        headers: {
+          Authorization: `Bearer ${auth.authData.token}`,
+        },
+      })
+      .then(response => {
+        if (response.data.message.length > 0) {
+          // console.log(response.data.message, 'book');
+          setUserShelf(response.data.message);
+        } else {
+          setDisableAddToShelf(false);
+        }
+      })
+      .catch(error => {
+        console.log(error, 'error');
+      });
+  }, []);
+
+  const addToShelf = () => {
+    axios
+      .post(
+        `${baseUrl}/book-shelf`,
+        {
+          user_id: auth.userId,
+          book_id: book.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.authData.token}`,
+          },
+        },
+      )
+      .then(response => {
+        if (response.data.success === true) {
+          setDisableAddToShelf(true);
+        }
+      });
+  };
 
   if (!book) {
     return <Loading />;
@@ -33,7 +95,12 @@ const BookDetailScreen = () => {
       <KeyboardAvoidingView>
         <BookImage book={book} />
         {/* <MoreFromAuthor author={book.authors} /> */}
-        <AddToBookShelf />
+        <AddToBookShelf
+          disableAddToShelf={disableAddToShelf}
+          onPress={addToShelf}
+        />
+
+        <BorrowAvailability book={book} />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
