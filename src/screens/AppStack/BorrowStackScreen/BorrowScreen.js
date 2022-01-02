@@ -7,8 +7,8 @@ import BorrowedBooksList from '../../../components/BorrowStackScreen/BorrowedBoo
 const BorrowScreen = () => {
   return (
     <View style={{width: '100%', flex: 1, padding: '5%'}}>
-      <BorrowedBooksList />
-      <AvailableBooksList />
+      {/* <BorrowedBooksList /> */}
+      {/* <AvailableBooksList /> */}
     </View>
   );
 };

@@ -40,7 +40,7 @@ const LoginScreen = ({route}) => {
   };
   const loginValidationSchema = yup.object().shape({
     username: yup.string().required('Username is Required'),
-    password: yup.string().min(8).required('Password is required'),
+    password: yup.string().min(6).required('Password is required'),
   });
 
   useFocusEffect(

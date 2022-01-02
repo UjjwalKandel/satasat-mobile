@@ -17,9 +17,7 @@ import BookCard from '../../../components/BookCard';
 
 import BookImage from '../../../components/BookDetailScreen/BookImage';
 import AddToBookShelf from '../../../components/BookDetailScreen/AddToBookShelf';
-import MoreFromAuthor from '../../../components/BookDetailScreen/MoreFromAuthor';
 import {useAuth} from '../../../contexts/Auth';
-import BorrowAvailability from '../../../components/BookDetailScreen/BorrowAvailability';
 
 const {width, height} = Dimensions.get('window');
 
@@ -35,7 +33,7 @@ const BookDetailScreen = () => {
 
   useEffect(() => {
     userShelf.forEach(item => {
-      if (item.id === book.id) {
+      if (item.Book.id === book.id) {
         setDisableAddToShelf(true);
       }
     });
