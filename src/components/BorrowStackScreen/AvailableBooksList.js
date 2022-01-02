@@ -1,10 +1,10 @@
 import {useAsyncStorage} from '@react-native-async-storage/async-storage/jest/async-storage-mock';
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet,FlatList, Text, View} from 'react-native';
 import {useAuth} from '../../contexts/Auth';
 import {baseUrl} from '../../services/AuthService';
-
+import AvailableBookCard from './AvailableBookCard';
 const AvailableBooksList = () => {
   const auth = useAuth();
   const [availableBooks, setAvailableBooks] = useState([]);
@@ -29,14 +29,25 @@ const AvailableBooksList = () => {
         console.log(error);
       });
   };
+  const renderItem = ({item}) => <AvailableBookCard book={item.Book} data={item}/>;
+
+  const renderHeader = () => <View><Text style={{fontWeight: 'bold'}}>Available Books</Text></View>
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{paddingVertical: '5%'}}>
       {availableBooks.length != 0 ? (
-        availableBooks.map((item, index) => (
-          <View key={index.toString()}>
-            <Text>{item.Book.title}</Text>
-          </View>
-        ))
+            <FlatList
+              data={availableBooks}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={renderItem}
+              ListHeaderComponent={renderHeader}
+              ItemSeparatorComponent={({highlighted}) => (
+                <View style={{height: 10}} />
+              )}
+              // refreshControl={
+              //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              // }
+            />
+        
       ) : (
         <View>
           <Text>No books available</Text>

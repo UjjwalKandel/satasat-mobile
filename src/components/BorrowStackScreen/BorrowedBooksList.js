@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet,FlatList, Text, View} from 'react-native';
 import {useAuth} from '../../contexts/Auth';
 import {baseUrl} from '../../services/AuthService';
+import BorrowedBookCard from './BorrowedBookCard';
 
 const BorrowedBooksList = () => {
   const auth = useAuth();
@@ -20,7 +21,6 @@ const BorrowedBooksList = () => {
         },
       })
       .then(response => {
-        console.log(response.data);
         if (response.data.message.length > 0) {
           setBorrowedBooks(response.data.message);
         }
@@ -29,23 +29,28 @@ const BorrowedBooksList = () => {
         console.log(error);
       });
   };
+  const renderItem = ({item}) => <BorrowedBookCard book={item.BookShelf.Book} data={item}/>;
 
+  const renderHeader = () => <View><Text style={{fontWeight: 'bold'}}>Borrowed Books</Text></View>
   return (
-    <View
-      style={{
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        backgroundColor: '#ccc',
-      }}>
+    <View style={{paddingVertical: '5%'}}>
       {borrowedBooks.length != 0 ? (
-        borrowedBooks.map((item, index) => (
-          <View key={index.toString()}>
-            <Text>{item.Books.title}</Text>
-          </View>
-        ))
+            <FlatList
+              data={borrowedBooks}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={renderItem}
+              ListHeaderComponent={renderHeader}
+              ItemSeparatorComponent={({highlighted}) => (
+                <View style={{height: 10}} />
+              )}
+              // refreshControl={
+              //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              // }
+            />
+        
       ) : (
-        <View style={{paddingVertical: '5%'}}>
-          <Text>No books Borrowed</Text>
+        <View>
+          <Text>No books available</Text>
         </View>
       )}
     </View>
