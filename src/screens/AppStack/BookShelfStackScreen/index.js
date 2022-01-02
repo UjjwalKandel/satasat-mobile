@@ -3,8 +3,9 @@ import {StyleSheet, Text, View} from 'react-native';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import BookDetailScreen from '../HomeStackScreen/BookDetailScreen';
 import BookShelfScreen from './BookShelfScreen';
+import DetailScreen from './DetailScreen';
+import BookDetailScreen from '../HomeStackScreen/BookDetailScreen';
 const Stack = createNativeStackNavigator();
 
 export const BookShelfStackScreen = () => {
@@ -16,8 +17,8 @@ export const BookShelfStackScreen = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        component={BookDetailScreen}
-        name="BookDetailScreen"
+        component={DetailScreen}
+        name="DetailScreen"
         options={{headerShown: false}}
       />
     </Stack.Navigator>

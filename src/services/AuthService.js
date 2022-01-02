@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const baseUrl = 'http://192.168.1.74:8084';
+export const baseUrl = 'http://192.168.10.69:8084';
 
 const signIn = async (username, password) => {
   try {
