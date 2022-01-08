@@ -31,7 +31,7 @@ const AvailableBooksList = () => {
   };
   const renderItem = ({item}) => <AvailableBookCard book={item.Book} data={item}/>;
 
-  const renderHeader = () => <View><Text style={{fontWeight: 'bold'}}>Available Books</Text></View>
+  const renderHeader = () => <View style={{paddingLeft: '5%'}}><Text style={{fontWeight: 'bold'}}>Available Books</Text></View>
   return (
     <View style={{paddingVertical: '5%'}}>
       {availableBooks.length != 0 ? (

@@ -34,41 +34,41 @@ const BorrowedDetailScreen = () => {
   const [requestSuccess, setRequestSuccess] = useState();
   const [disableRequest, setDisableRequest] = useState();
 
-//   const [userShelf, setUserShelf] = useState([]);
-//   const [disableAddToShelf, setDisableAddToShelf] = useState();
-//   const [addToShelfVisible, setAddToShelfVisible] = useState(false);
+  const [userShelf, setUserShelf] = useState([]);
+  const [disableAddToShelf, setDisableAddToShelf] = useState();
+  const [addToShelfVisible, setAddToShelfVisible] = useState(false);
 
-//   useEffect(() => {
-//     userShelf.forEach(item => {
-//       if (item.id === book.id) {
-//         setDisableAddToShelf(true);
-//       }
-//     });
-//     if (disableAddToShelf === true) {
-//       setDisableAddToShelf(false);
-//     }
-//   }, [userShelf]);
+  useEffect(() => {
+    userShelf.forEach(item => {
+      if (item.id === book.id) {
+        setDisableAddToShelf(true);
+      }
+    });
+    if (disableAddToShelf === true) {
+      setDisableAddToShelf(false);
+    }
+  }, [userShelf]);
 
-//   useEffect(() => {
-//     console.log(auth.userId, 'userId');
-//     axios
-//       .get(`${baseUrl}/book-shelf?userId=${auth.userId}`, {
-//         headers: {
-//           Authorization: `Bearer ${auth.authData.token}`,
-//         },
-//       })
-//       .then(response => {
-//         if (response.data.message.length > 0) {
-//           // console.log(response.data.message, 'book');
-//           setUserShelf(response.data.message);
-//         } else {
-//           setDisableAddToShelf(false);
-//         }
-//       })
-//       .catch(error => {
-//         console.log(error, 'error');
-//       });
-//   }, []);
+  useEffect(() => {
+    console.log(auth.userId, 'userId');
+    axios
+      .get(`${baseUrl}/book-shelf?userId=${auth.userId}`, {
+        headers: {
+          Authorization: `Bearer ${auth.authData.token}`,
+        },
+      })
+      .then(response => {
+        if (response.data.message.length > 0) {
+          // console.log(response.data.message, 'book');
+          setUserShelf(response.data.message);
+        } else {
+          setDisableAddToShelf(false);
+        }
+      })
+      .catch(error => {
+        console.log(error, 'error');
+      });
+  }, []);
 
 
 
@@ -83,10 +83,10 @@ const BorrowedDetailScreen = () => {
       <KeyboardAvoidingView>
         <BookImage book={book} />
         {/* <MoreFromAuthor author={book.authors} /> */}
-        {/* <BookRequest
+        <BookRequest
           disableRequest={disableRequest}
           onPress={requestBook}
-        /> */}
+        />
 
         {/* <BorrowAvailability book={book} /> */}
       </KeyboardAvoidingView>

@@ -43,12 +43,12 @@ const SignUpScreen = ({navigation}) => {
   );
 
   const signUpValidationSchema = yup.object().shape({
-    fullName: yup
+    full_name: yup
       .string()
       .matches(/(\w.+\s).+/, 'Enter at least 2 names')
       .required('Full name is required'),
     user_name: yup.string().required('Username is required'),
-    phoneNumber: yup
+    phone_number: yup
       .string()
       .matches(/(\d){10}\b/, 'Enter a valid phone number')
       .required('Phone number is required'),
@@ -67,7 +67,7 @@ const SignUpScreen = ({navigation}) => {
       )
       .min(8, ({min}) => `Password must be at least ${min} characters`)
       .required('Password is required'),
-    confirmPassword: yup
+    confirm_password: yup
       .string()
       .oneOf([yup.ref('password')], 'Passwords do not match')
       .required('Confirm password is required'),
@@ -89,12 +89,12 @@ const SignUpScreen = ({navigation}) => {
         <Formik
           validateOnMount={true}
           initialValues={{
-            fullName: '',
+            full_name: '',
             user_name: '',
             email: '',
-            phoneNo: '',
+            phone_number: '',
             password: '',
-            confirmPassword: '',
+            confirm_password: '',
             gender: '',
             address: '',
           }}
@@ -114,7 +114,7 @@ const SignUpScreen = ({navigation}) => {
             <View style={{alignItems: 'center'}}>
               <Field
                 component={CustomInput}
-                name="fullName"
+                name="full_name"
                 placeholder="Full Name"
               />
               <Field
@@ -130,7 +130,7 @@ const SignUpScreen = ({navigation}) => {
               />
               <Field
                 component={CustomInput}
-                name="phoneNumber"
+                name="phone_number"
                 placeholder="Phone Number"
                 keyboardType="numeric"
               />
@@ -143,7 +143,7 @@ const SignUpScreen = ({navigation}) => {
               />
               <Field
                 component={CustomInput}
-                name="confirmPassword"
+                name="confirm_password"
                 placeholder="Retype Password"
                 secureTextEntry={hidePasswordTwo}
                 accessoryRight={renderIconTwo}

@@ -31,7 +31,7 @@ const BorrowedBooksList = () => {
   };
   const renderItem = ({item}) => <BorrowedBookCard book={item.BookShelf.Book} data={item}/>;
 
-  const renderHeader = () => <View><Text style={{fontWeight: 'bold'}}>Borrowed Books</Text></View>
+  const renderHeader = () => <View style={{paddingLeft: '5%'}}><Text style={{fontWeight: 'bold'}}>Borrowed Books</Text></View>
   return (
     <View style={{paddingVertical: '5%'}}>
       {borrowedBooks.length != 0 ? (
