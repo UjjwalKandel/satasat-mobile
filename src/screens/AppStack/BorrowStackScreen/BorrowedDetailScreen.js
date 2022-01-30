@@ -83,10 +83,6 @@ const BorrowedDetailScreen = () => {
       <KeyboardAvoidingView>
         <BookImage book={book} />
         {/* <MoreFromAuthor author={book.authors} /> */}
-        <BookRequest
-          disableRequest={disableRequest}
-          onPress={requestBook}
-        />
 
         {/* <BorrowAvailability book={book} /> */}
       </KeyboardAvoidingView>
