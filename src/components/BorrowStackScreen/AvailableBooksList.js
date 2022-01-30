@@ -29,7 +29,7 @@ const AvailableBooksList = () => {
         console.log(error);
       });
   };
-  const renderItem = ({item}) => <AvailableBookCard book={item.Book} data={item}/>;
+  const renderItem = ({item}) => <AvailableBookCard book={item}/>;
 
   const renderHeader = () => <View style={{paddingLeft: '5%'}}><Text style={{fontWeight: 'bold'}}>Available Books</Text></View>
   return (

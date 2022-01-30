@@ -1,24 +1,24 @@
-import React,{useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
-import axios from 'axios';
-import {useAuth} from '../../contexts/Auth';
 
 import {Text} from '@ui-kitten/components';
 import {useNavigation, useRoute} from '@react-navigation/native';
 
-const AvailableBookCard = ({book, data}) => {
-  const auth = useAuth();
+const AvailableBookCard = ({book, getAvailableBooks}) => {
+  const [status, setStatus] = useState();
+
   const navigation = useNavigation();
-  const route = useRoute();
 
   const navigateToDetail = () => {
     navigation.navigate('AvailableDetailScreen', {
-      book: book,
-      data: data
+      book: book
     });
   };
 
-
+  useEffect(()=>{
+    if(book?.requested == true)
+      setStatus('Requested')
+  }, [])
 
   if (!book) {
     return null;
@@ -68,11 +68,11 @@ const AvailableBookCard = ({book, data}) => {
             <View style={{flex: 1, marginVertical: 20}}>
               <Text category="p1">{book.title}</Text>
               <Text category="label">{book.authors}</Text>
-              <Text category="s1"><Text category="label">Owner:</Text> {data.User.full_name}</Text>
+              <Text category="s1"><Text category="label">Owner:</Text> {book.BookShelves[0].User.full_name}</Text>
             </View>
           </View>
         </View>
-        {/* <View
+        <View
           style={{
             flex: 1,
             alignItems: 'center',
@@ -82,10 +82,12 @@ const AvailableBookCard = ({book, data}) => {
             marginHorizontal: 20,
             paddingLeft: 4,
           }}>
-          <Text status="success" category="p1">
-            Available
+          <Text
+            status='success'
+            category="p1">
+            {status}
           </Text>
-        </View> */}
+        </View>
       </View>
     </TouchableOpacity>
   );
