@@ -4,7 +4,7 @@ import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
 import {Text} from '@ui-kitten/components';
 import {useNavigation, useRoute} from '@react-navigation/native';
 
-const BookShelfCard = ({book, lendFlag, requests, lent}) => {
+const BookShelfCard = ({book, lendFlag, requests, lent, available}) => {
   const navigation = useNavigation();
   const route = useRoute();
   const [status, setStatus] = useState();
@@ -17,14 +17,21 @@ const BookShelfCard = ({book, lendFlag, requests, lent}) => {
   }, []);
 
   useEffect(() => {
+    // if (lendFlag) {
+    //   setStatus('Lent');
+    // } else {
+    //   if (bookRequests.length > 0) {
+    //     setStatus('Requested');
+    //   } else {
+    //     setStatus('Available');
+    //   }
+    // }
     if (lendFlag) {
       setStatus('Lent');
+    } else if (bookRequests.length > 0) {
+      setStatus('Requested');
     } else {
-      if (bookRequests.length > 0) {
-        setStatus('Requested');
-      } else {
-        setStatus('Available');
-      }
+      setStatus('Available');
     }
   }, [bookRequests]);
 

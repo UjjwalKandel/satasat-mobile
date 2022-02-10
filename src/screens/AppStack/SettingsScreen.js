@@ -11,6 +11,7 @@ const SettingsScreen = () => {
   const [user, setUser] = useState();
   const signOut = async () => {
     try {
+      setUser(null);
       await auth.signOut();
     } catch (error) {
       console.log(error.message);
@@ -35,13 +36,16 @@ const SettingsScreen = () => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setLoading(false);
     }, 1000);
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [user]);
 
   if (!user) return null;
-  console.log('rendered');
+
   return (
     <View style={styles.container}>
       <View style={styles.userbox}>

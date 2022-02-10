@@ -60,7 +60,9 @@ const BookCard = ({book}) => {
             }}>
             <View style={{flex: 1, marginVertical: 20}}>
               <Text category="p1">{book.title}</Text>
-              <Text category="label">{book.authors}</Text>
+              <Text category="label" numberOfLines={2}>
+                {book.authors}
+              </Text>
             </View>
           </View>
         </View>

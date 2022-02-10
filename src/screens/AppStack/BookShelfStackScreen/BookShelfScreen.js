@@ -1,9 +1,10 @@
 import {Spinner} from '@ui-kitten/components';
-import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {useRoute} from '@react-navigation/native';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
+
+import axios from '../../../services/httpService';
 
 import BookShelfCard from './BookShelfCard';
 import {useAuth} from '../../../contexts/Auth';
@@ -39,7 +40,6 @@ const BookShelfScreen = () => {
         })
         .then(response => {
           if (response.data.message.length > 0) {
-            console.log(response.data.message);
             setBooks(response.data.message);
           }
         })
@@ -47,7 +47,6 @@ const BookShelfScreen = () => {
           console.log(error);
         })
         .finally(() => {
-          console.log(books, 'books');
           setTimeout(() => {
             setLoading(false);
           }, 1000);
@@ -60,6 +59,7 @@ const BookShelfScreen = () => {
       <BookShelfCard
         book={item.Book}
         lendFlag={item.lend_flag}
+        available={item.available}
         requests={item.Requests}
         lent={item.Lent}
       />

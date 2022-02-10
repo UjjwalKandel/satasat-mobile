@@ -2,6 +2,7 @@ import React, {createContext, useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {authService} from '../services/AuthService';
+import {setAuthToken} from '../services/httpService';
 
 const AuthContext = createContext();
 
@@ -29,6 +30,7 @@ const AuthProvider = ({children}) => {
           await signOut();
         } else {
           setAuthData(_authData);
+          setAuthToken(_authData.token);
           setUserId(decodedJwt.userId);
           //print jwt to use in Swagger
           console.log(_authData);
@@ -49,6 +51,7 @@ const AuthProvider = ({children}) => {
         cancelToken,
       );
       if (_authData) {
+        setAuthToken(_authData.token);
         setAuthData(_authData);
         AsyncStorage.setItem('@AuthData', JSON.stringify(_authData));
       }

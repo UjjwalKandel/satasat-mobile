@@ -1,118 +1,49 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 import {Text} from '@ui-kitten/components';
-import axios from 'axios';
-import {baseUrl} from '../../services/AuthService';
-import {useAuth} from '../../contexts/Auth';
+
+import {RequestCard} from './RequestCard';
+
 const Requests = ({requests}) => {
-  const auth = useAuth();
+  const [handlingRequest, setHandlingRequest] = useState(false);
+  const [requestHandled, setRequestHandled] = useState(false);
+
+  useEffect(() => {
+    if (requests.length > 0) {
+      setRequestHandled(false);
+    } else {
+      setRequestHandled(true);
+    }
+  }, []);
+  const changeHandlingRequest = val => {
+    setHandlingRequest(val);
+  };
+
+  const setRequestHandledTrue = () => {
+    setRequestHandled(true);
+  };
+
   if (!requests) {
     return null;
   }
 
-  useEffect(() => {
-    console.log(requests, 'requests');
-  }, []);
-
-  const handleRequests = (lendDetailsId, flag) => {
-    axios
-      .post(
-        `${baseUrl}/lend/respond/${lendDetailsId}`,
-        {
-          accept_request: flag,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${auth.authData.token}`,
-          },
-        },
-      )
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  const RenderRequestCard = ({item, index}) => {
-    if (!item) {
-      return null;
-    }
-    return (
-      <View
-        style={{
-          width: '100%',
-          backgroundColor: '#fff',
-          marginTop: '5%',
-          padding: '5%',
-          flexDirection: 'row',
-        }}>
-        <View style={{flex: 3}}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <View style={{flex: 1}}>
-              <Text appearance="hint">Name</Text>
-            </View>
-            <View style={{flex: 4}}>
-              <Text>: {item.User.full_name}</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <View style={{flex: 1}}>
-              <Text appearance="hint">Email</Text>
-            </View>
-            <View style={{flex: 4}}>
-              <Text>: {item.User.email}</Text>
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <View style={{flex: 1}}>
-              <Text appearance="hint">Gender</Text>
-            </View>
-            <View style={{flex: 4}}>
-              <Text>: {item.User.gender}</Text>
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'space-around',
-          }}>
-          <TouchableOpacity onPress={handleRequests(item.id, true)}>
-            <Text status="success">Accept</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleRequests(item.id, false)}>
-            <Text status="danger">Reject</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
-  return (
-    <View>
-      {requests.map((item, index) => (
-        <RenderRequestCard item={item} key={index.toString()} />
-      ))}
+  return !requestHandled ? (
+    <View style={{backgroundColor: '#fff', marginVertical: 10, padding: '5%'}}>
+      <>
+        <Text category="h6">Book Requests</Text>
+        {requests.map((item, index) => (
+          <RequestCard
+            item={item}
+            key={index.toString()}
+            setHandlingRequest={changeHandlingRequest}
+            handlingRequest={handlingRequest}
+            setRequestHandledTrue={setRequestHandledTrue}
+          />
+        ))}
+      </>
     </View>
-  );
+  ) : null;
 };
 
 export default Requests;

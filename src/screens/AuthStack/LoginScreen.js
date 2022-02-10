@@ -72,10 +72,10 @@ const LoginScreen = ({route}) => {
               Keyboard.dismiss();
               try {
                 await loginSubmitFormHandler(values.username, values.password);
+                actions.resetForm();
               } catch (error) {
                 actions.setSubmitting(false);
               } finally {
-                actions.resetForm();
                 actions.validateForm();
               }
             }}>

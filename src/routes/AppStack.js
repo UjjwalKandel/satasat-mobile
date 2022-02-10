@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {Icon} from '@ui-kitten/components';
+import {Icon, Text} from '@ui-kitten/components';
 
 import {HomeStackScreen} from '../screens/AppStack/HomeStackScreen';
 import SettingsScreen from '../screens/AppStack/SettingsScreen';
@@ -38,51 +38,6 @@ export const AppStack = () => {
           },
         })}
       />
-      {/* <BottomTabs.Screen
-        name="Search"
-        component={SearchScreen}
-        options={({route}) => ({
-          tabBarIcon: ({focused}) => {
-            return (
-              <Icon
-                style={{height: 24, width: 24}}
-                name={focused ? 'search' : 'search-outline'}
-                fill={focused ? '#FFCD00' : '#000'}
-              />
-            );
-          },
-        })}
-      />
-      <BottomTabs.Screen
-        name="Explore"
-        component={ExploreScreen}
-        options={({route}) => ({
-          tabBarIcon: ({focused}) => {
-            return (
-              <Icon
-                style={{height: 24, width: 24}}
-                name={focused ? 'grid' : 'grid-outline'}
-                fill={focused ? '#FFCD00' : '#000'}
-              />
-            );
-          },
-        })}
-      />
-      <BottomTabs.Screen
-        name="Favorites"
-        component={FavoritesScreen}
-        options={({route}) => ({
-          tabBarIcon: ({focused}) => {
-            return (
-              <Icon
-                style={{height: 24, width: 24}}
-                name={focused ? 'heart' : 'heart-outline'}
-                fill={focused ? '#FFCD00' : '#000'}
-              />
-            );
-          },
-        })}
-      /> */}
       <BottomTabs.Screen
         name="BookShelfStackScreen"
         component={BookShelfStackScreen}
@@ -96,6 +51,8 @@ export const AppStack = () => {
               />
             );
           },
+          headerShown: true,
+          headerTitle: () => <Text category="h6">My Bookshelf</Text>,
         })}
       />
       <BottomTabs.Screen

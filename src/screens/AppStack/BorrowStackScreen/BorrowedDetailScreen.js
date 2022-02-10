@@ -9,7 +9,7 @@ import {
   Dimensions,
   DatePickerIOSBase,
 } from 'react-native';
-import {Text,Button} from '@ui-kitten/components';
+import {Text, Button} from '@ui-kitten/components';
 import axios from 'axios';
 
 import {baseUrl} from '../../../services/AuthService';
@@ -30,7 +30,7 @@ const BorrowedDetailScreen = () => {
   const auth = useAuth();
   const book = route.params.book;
   const data = route.params.data;
-  
+
   const [requestSuccess, setRequestSuccess] = useState();
   const [disableRequest, setDisableRequest] = useState();
 
@@ -70,13 +70,9 @@ const BorrowedDetailScreen = () => {
       });
   }, []);
 
-
-
   if (!book) {
     return <Loading />;
   }
-
-
 
   return (
     <SafeAreaView>

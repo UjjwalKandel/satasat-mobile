@@ -1,15 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-  TouchableWithoutFeedback,
-  RefreshControl,
-} from 'react-native';
+import {FlatList, StyleSheet, Text, View, RefreshControl} from 'react-native';
 import axios from 'axios';
-import {Input, Spinner, Icon} from '@ui-kitten/components';
-import SwitchSelector from 'react-native-switch-selector';
+import {Spinner} from '@ui-kitten/components';
 
 import {baseUrl} from '../services/AuthService';
 import {useAuth} from '../contexts/Auth';
@@ -32,6 +24,9 @@ const BookList = ({searchItem}) => {
 
   useEffect(() => {
     getBooks();
+    return () => {
+      setBooks([]);
+    };
   }, [search]);
 
   const resetSearch = () => {
@@ -131,8 +126,8 @@ const BookList = ({searchItem}) => {
     setPage(1);
     setBooks([]);
     setRefreshing(true);
-    setSearch('');
     setPageEnd(false);
+    setSearch('');
   };
 
   const renderItem = ({item}) => <BookCard book={item} />;
@@ -167,9 +162,9 @@ const BookList = ({searchItem}) => {
           <View style={{height: 10}} />
         )}
         ListFooterComponent={renderFooter}
-        // refreshControl={
-        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        // }
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </View>
   );

@@ -32,7 +32,9 @@ const BookImage = ({book}) => {
         <View style={{margin: 20}}>
           <Text category="h6">{book.title}</Text>
           <View style={{marginVertical: 10}}>
-            <Text category="c1">{book.authors}</Text>
+            <Text category="c1" numberOfLines={2}>
+              {book.authors}
+            </Text>
           </View>
         </View>
       </View>
