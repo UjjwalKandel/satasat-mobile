@@ -4,25 +4,16 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
-  Image,
   KeyboardAvoidingView,
-  Dimensions,
-  DatePickerIOSBase,
 } from 'react-native';
 import {Text, Button} from '@ui-kitten/components';
 import axios from 'axios';
 
 import {baseUrl} from '../../../services/AuthService';
 import {Loading} from '../../../components/Loading';
-import BookCard from '../../../components/BookCard';
 
 import BookImage from '../../../components/BookDetailScreen/BookImage';
-import AddToBookShelf from '../../../components/BookDetailScreen/AddToBookShelf';
-import MoreFromAuthor from '../../../components/BookDetailScreen/MoreFromAuthor';
 import {useAuth} from '../../../contexts/Auth';
-import BorrowAvailability from '../../../components/BookDetailScreen/BorrowAvailability';
-
-const {width, height} = Dimensions.get('window');
 
 const BorrowedDetailScreen = () => {
   const navigation = useNavigation();
