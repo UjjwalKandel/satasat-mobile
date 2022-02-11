@@ -28,7 +28,7 @@ export const RequestCard = ({
       setRequestHandledTrue();
     } catch (error) {
       console.log(error);
-      ToastAndroid.show('Failed to handle request', ToastAndroid.SHORT);
+      ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
     } finally {
       setHandlingRequest(false);
     }

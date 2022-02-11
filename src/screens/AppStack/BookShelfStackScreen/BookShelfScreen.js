@@ -62,6 +62,8 @@ const BookShelfScreen = () => {
         available={item.available}
         requests={item.Requests}
         lent={item.Lent}
+        accepted={item.Accepted}
+        returnRequests={item.ReturnRequests}
       />
     );
   };
