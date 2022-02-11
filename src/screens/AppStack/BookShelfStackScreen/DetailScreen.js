@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   FlatList,
   Image,
   KeyboardAvoidingView,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -18,25 +19,41 @@ import {useAuth} from '../../../contexts/Auth';
 import {baseUrl} from '../../../services/AuthService';
 import {Spinner, Text} from '@ui-kitten/components';
 import RecommendationsList from '../../../components/RecommendationsList/RecommendationsList';
+import ConfirmLend from '../../../components/BookShelfScreen/ConfirmLend';
 
 const DetailScreen = () => {
   const route = useRoute();
-  const auth = useAuth();
-  const [loading, setLoading] = useState(false);
+  const [bookAccepted, setBookAccepted] = useState(false);
+
+  useEffect(() => {
+    const checkBookAccepted = async () => {
+      const acceptedArray = await route.params.accepted;
+      if (acceptedArray.length > 0) {
+        setBookAccepted(true);
+      } else if (route.params.lendFlag) {
+        setBookAccepted(true);
+      }
+    };
+    checkBookAccepted();
+  }, [route.params]);
 
   if (!route.params.bookData) {
     return null;
   }
 
   return (
-    <SafeAreaView>
-      <KeyboardAvoidingView style={{paddingTop: '1.25%'}}>
-        <BookImage book={route.params.bookData} />
-        {!route.params.lengFlag && (
-          <Requests requests={route.params.requests} />
-        )}
-        <LentToDetails lent={route.params.lent} />
-        <RecommendationsList book={route.params.bookData} />
+    <SafeAreaView style={{flex: 1}}>
+      <KeyboardAvoidingView style={{paddingTop: '1.25%', flex: 1}}>
+        <ScrollView>
+          <BookImage book={route.params.bookData} />
+          {!bookAccepted ? (
+            <Requests requests={route.params.requests} />
+          ) : (
+            <ConfirmLend accepted={route.params.accepted} />
+          )}
+          <LentToDetails lent={route.params.lent} />
+          {/* <RecommendationsList book={route.params.bookData} /> */}
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

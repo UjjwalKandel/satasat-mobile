@@ -4,10 +4,19 @@ import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
 import {Text} from '@ui-kitten/components';
 import {useNavigation, useRoute} from '@react-navigation/native';
 
-const BookShelfCard = ({book, lendFlag, requests, lent, available}) => {
+const BookShelfCard = ({
+  book,
+  lendFlag,
+  requests,
+  lent,
+  available,
+  accepted,
+  returnRequests,
+}) => {
   const navigation = useNavigation();
   const route = useRoute();
   const [status, setStatus] = useState();
+  const [statusFlag, setStatusFlag] = useState();
   const [bookRequests, setBookRequests] = useState([]);
   const [lentDetails, setLentDetails] = useState([]);
 
@@ -27,8 +36,10 @@ const BookShelfCard = ({book, lendFlag, requests, lent, available}) => {
     //   }
     // }
     if (lendFlag) {
-      setStatus('Lent');
-    } else if (bookRequests.length > 0) {
+      setStatus('Lent / Awaiting return');
+    } else if (accepted.length > 0) {
+      setStatus('To be lent');
+    } else if (requests.length > 0) {
       setStatus('Requested');
     } else {
       setStatus('Available');
@@ -41,6 +52,8 @@ const BookShelfCard = ({book, lendFlag, requests, lent, available}) => {
       requests: bookRequests,
       lendFlag: lendFlag,
       lent: lentDetails,
+      accepted: accepted,
+      returnRequests: returnRequests,
     });
   };
   if (!book) {
@@ -111,8 +124,10 @@ const BookShelfCard = ({book, lendFlag, requests, lent, available}) => {
             status={
               status === 'Available'
                 ? 'success'
-                : status === 'Lent'
+                : status === 'Lent / Awaiting return'
                 ? 'warning'
+                : status === 'To be lent'
+                ? 'primary'
                 : 'danger'
             }
             category="p1">
