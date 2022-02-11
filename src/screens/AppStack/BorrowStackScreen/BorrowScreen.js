@@ -3,6 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import AvailableBooksList from '../../../components/BorrowStackScreen/AvailableBooksList';
 
 import BorrowedBooksList from '../../../components/BorrowStackScreen/BorrowedBooksList';
+import PendingBookList from '../../../components/BorrowStackScreen/PendingBookList';
 
 const BorrowScreen = () => {
   const [activeTab, setActiveTab] = useState("Available")
@@ -10,6 +11,7 @@ const BorrowScreen = () => {
     <View style={{width: '100%', flex: 1, paddingTop: '5%'}}>
       <View style={{flexDirection: 'row', alignSelf: 'center'}}>
         <HeaderButton text="Available" btnColor='black' textColor='white' activeTab={activeTab} setActiveTab={setActiveTab}/>
+        <HeaderButton text="Pending" btnColor='white' textColor='black' activeTab={activeTab} setActiveTab={setActiveTab}/>
         <HeaderButton text="Borrowed" btnColor='white' textColor='black' activeTab={activeTab} setActiveTab={setActiveTab}/>
       </View>
       <View style={{width: '100%', flex: 1}}>
@@ -37,6 +39,8 @@ const HeaderButton = (props) => (
 const BooksList = (props) =>{
   if(props.activeTab=='Available')
     return <AvailableBooksList />
+  else if(props.activeTab == 'Pending')
+    return <PendingBookList />
   else 
     return <BorrowedBooksList />
 }

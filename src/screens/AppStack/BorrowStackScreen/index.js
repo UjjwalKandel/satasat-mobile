@@ -6,6 +6,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BorrowScreen from './BorrowScreen';
 import AvailableDetailScreen from './AvailableDetailScreen';
 import BorrowedDetailScreen from './BorrowedDetailScreen';
+import PendingDetailScreen from './PendingDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,11 @@ export const BorrowStackScreen = () => {
       <Stack.Screen
         component={BorrowedDetailScreen}
         name="BorrowedDetailScreen"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={PendingDetailScreen}
+        name="PendingDetailScreen"
         options={{headerShown: false}}
       />
     </Stack.Navigator>

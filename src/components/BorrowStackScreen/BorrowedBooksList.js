@@ -4,9 +4,18 @@ import {Text} from '@ui-kitten/components';
 
 import axios from '../../services/httpService';
 import BorrowedBookCard from './BorrowedBookCard';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 
 const BorrowedBooksList = () => {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
+
+  const route = useRoute();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getBorrowedBooksList();
+    }, [route.params]),
+  );
 
   useEffect(() => {
     getBorrowedBooksList();
@@ -49,11 +58,11 @@ const BorrowedBooksList = () => {
             <Text>You haven't borrowed any books yet.</Text>
           </View>
         )}
-        contentContainerStyle={{
-          flexGrow: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+        // contentContainerStyle={{
+        //   flexGrow: 1,
+        //   alignItems: 'center',
+        //   justifyContent: 'center',
+        // }}
         // refreshControl={
         //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         // }

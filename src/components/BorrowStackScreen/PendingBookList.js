@@ -3,60 +3,65 @@ import {StyleSheet, FlatList, View} from 'react-native';
 import {Text} from '@ui-kitten/components';
 
 import axios from '../../services/httpService';
-import AvailableBookCard from './AvailableBookCard';
+import PendingBookCard from './PendingBookCard';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
-const AvailableBooksList = () => {
-  const [availableBooks, setAvailableBooks] = useState([]);
+
+const PendingBooksList = () => {
+  const [pendingBooks, setPendingBooks] = useState([]);
 
   const route = useRoute();
 
   useFocusEffect(
     React.useCallback(() => {
-      getAvailableBooks();
+      getPendingBooksList();
     }, [route.params]),
   );
-
   useEffect(() => {
-    getAvailableBooks();
+    getPendingBooksList();
   }, []);
 
-  const getAvailableBooks = () => {
+  const getPendingBooksList = () => {
     axios
-      .get(`/borrow/available-books`)
+      .get(`/borrow/lend-confirm-requests`)
       .then(response => {
         if (response.data.message.length > 0) {
-          setAvailableBooks(response.data.message);
+          setPendingBooks(response.data.message);
         }
       })
       .catch(error => {
         console.log(error);
       });
   };
-  const renderItem = ({item}) => <AvailableBookCard book={item} />;
+  const renderItem = ({item}) => (
+    <PendingBookCard book={item.BookShelf.Book} data={item} />
+  );
 
   const renderHeader = () =>
-    availableBooks.length > 0 && (
+    pendingBooks.length > 0 && (
       <View style={{paddingLeft: '5%'}}>
-        <Text style={{fontWeight: 'bold'}}>Available Books</Text>
+        <Text style={{fontWeight: 'bold'}}>Pending Books</Text>
       </View>
     );
   return (
     <View style={{paddingVertical: '5%'}}>
       <FlatList
-        data={availableBooks}
+        data={pendingBooks}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItem}
         ListHeaderComponent={renderHeader}
         ItemSeparatorComponent={({highlighted}) => (
           <View style={{height: 10}} />
         )}
-        contentContainerStyle={{flexGrow: 1}}
         ListEmptyComponent={() => (
-          <View
-            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-            <Text>No books available to borrow</Text>
+          <View>
+            <Text>You don't have any pending requests to confirm yet.</Text>
           </View>
         )}
+        // contentContainerStyle={{
+        //   flexGrow: 1,
+        //   alignItems: 'center',
+        //   justifyContent: 'center',
+        // }}
         // refreshControl={
         //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         // }
@@ -65,6 +70,6 @@ const AvailableBooksList = () => {
   );
 };
 
-export default AvailableBooksList;
+export default PendingBooksList;
 
 const styles = StyleSheet.create({});

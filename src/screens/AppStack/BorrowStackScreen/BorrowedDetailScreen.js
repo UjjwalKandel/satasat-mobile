@@ -34,44 +34,51 @@ const BorrowedDetailScreen = () => {
   const [requestSuccess, setRequestSuccess] = useState();
   const [disableRequest, setDisableRequest] = useState();
 
-  const [userShelf, setUserShelf] = useState([]);
-  const [disableAddToShelf, setDisableAddToShelf] = useState();
-  const [addToShelfVisible, setAddToShelfVisible] = useState(false);
-
   useEffect(() => {
-    userShelf.forEach(item => {
-      if (item.id === book.id) {
-        setDisableAddToShelf(true);
-      }
-    });
-    if (disableAddToShelf === true) {
-      setDisableAddToShelf(false);
-    }
-  }, [userShelf]);
+    if(data.pending_return_confirmation == true)
+      setDisableRequest(true)
+  }, []);
 
-  useEffect(() => {
-    console.log(auth.userId, 'userId');
+  const claimReturn = () =>{
+    console.log(data)
     axios
-      .get(`${baseUrl}/book-shelf?userId=${auth.userId}`, {
-        headers: {
-          Authorization: `Bearer ${auth.authData.token}`,
-        },
-      })
+      .patch(
+        `${baseUrl}/borrow/return-confirm/${data.id}`,{},
+        {
+          headers: {
+            Authorization: `Bearer ${auth.authData.token}`,
+          },
+        }
+      )
       .then(response => {
-        if (response.data.message.length > 0) {
-          // console.log(response.data.message, 'book');
-          setUserShelf(response.data.message);
-        } else {
-          setDisableAddToShelf(false);
+        if (response.data.success === true) {
+          setRequestSuccess(true);
+          setDisableRequest(true)
         }
       })
       .catch(error => {
         console.log(error, 'error');
       });
-  }, []);
-
+  }
   if (!book) {
     return <Loading />;
+  }
+
+  const ReturnRequest = ({disableRequest, onPress}) => {
+    return (
+      <View style={{alignItems: 'center', width: '100%', padding: 20}}>
+        <Button
+          disabled={disableRequest}
+          onPress={onPress}
+          style={{width: '90%'}}>
+          {disableRequest ? (
+            <Text status="success">Book Return Claimed</Text>
+          ) : (
+            <Text>Claim Book Return</Text>
+          )}
+        </Button>
+      </View>
+    );
   }
 
   return (
@@ -81,6 +88,10 @@ const BorrowedDetailScreen = () => {
         {/* <MoreFromAuthor author={book.authors} /> */}
 
         {/* <BorrowAvailability book={book} /> */}
+        <ReturnRequest
+          disableRequest={disableRequest}
+          onPress={claimReturn}
+        />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
