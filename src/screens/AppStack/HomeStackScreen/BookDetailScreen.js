@@ -70,7 +70,7 @@ const BookDetailScreen = () => {
           disableAddToShelf={disableAddToShelf}
           onPress={addToShelf}
         />
-        {/* <RecommendationsList book={book} /> */}
+        <RecommendationsList book={book} />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

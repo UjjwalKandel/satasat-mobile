@@ -14,9 +14,8 @@ import axios from 'axios';
 
 import BookImage from '../../../components/BookDetailScreen/BookImage';
 import Requests from '../../../components/BookShelfScreen/Requests';
+import ReturnRequests from '../../../components/BookShelfScreen/ReturnRequests';
 import LentToDetails from '../../../components/BookShelfScreen/LentToDetails';
-import {useAuth} from '../../../contexts/Auth';
-import {baseUrl} from '../../../services/AuthService';
 import {Spinner, Text} from '@ui-kitten/components';
 import RecommendationsList from '../../../components/RecommendationsList/RecommendationsList';
 import ConfirmLend from '../../../components/BookShelfScreen/ConfirmLend';
@@ -24,14 +23,19 @@ import ConfirmLend from '../../../components/BookShelfScreen/ConfirmLend';
 const DetailScreen = () => {
   const route = useRoute();
   const [bookAccepted, setBookAccepted] = useState(false);
+  const [returnReq, setReturnReq] = useState(false);
 
   useEffect(() => {
     const checkBookAccepted = async () => {
       const acceptedArray = await route.params.accepted;
+      const returnArray = await route.params.returnRequests;
       if (acceptedArray.length > 0) {
         setBookAccepted(true);
       } else if (route.params.lendFlag) {
         setBookAccepted(true);
+      }
+      if(returnArray.length > 0){
+        setReturnReq(true)
       }
     };
     checkBookAccepted();
@@ -52,6 +56,9 @@ const DetailScreen = () => {
             <ConfirmLend accepted={route.params.accepted} />
           )}
           <LentToDetails lent={route.params.lent} />
+          {returnReq ? (
+            <ReturnRequests returnRequests = {route.params.returnRequests}/>
+          ):null}
           {/* <RecommendationsList book={route.params.bookData} /> */}
         </ScrollView>
       </KeyboardAvoidingView>
