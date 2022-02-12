@@ -4,7 +4,7 @@ import {Text} from '@ui-kitten/components';
 
 import axios from '../../services/httpService';
 import PendingBookCard from './PendingBookCard';
-import { useFocusEffect, useRoute } from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 
 const PendingBooksList = () => {
   const [pendingBooks, setPendingBooks] = useState([]);
@@ -38,8 +38,17 @@ const PendingBooksList = () => {
 
   const renderHeader = () =>
     pendingBooks.length > 0 && (
-      <View style={{paddingLeft: '5%'}}>
-        <Text style={{fontWeight: 'bold'}}>Pending Books</Text>
+      <View
+        style={{
+          alignSelf: 'center',
+          marginVertical: 10,
+          paddingHorizontal: 10,
+        }}>
+        <Text style={{textAlign: 'center'}}>
+          This is a list of your borrow requests that were accepted. Please keep
+          in mind that every transaction must be recorded by confirming that
+          you've received the book.
+        </Text>
       </View>
     );
   return (
