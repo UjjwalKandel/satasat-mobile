@@ -111,14 +111,14 @@ const LoginScreen = ({route}) => {
                   accessoryRight={renderIcon}
                   secureTextEntry={secureTextEntry}
                 />
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={{marginVertical: 10}}
                   onPress={() => console.log('Forgot-password-test')}
                   disabled={isSubmitting}>
                   <Text style={[styles.titleText, {color: '#d00'}]}>
                     Forgot Password
                   </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <Button
                   style={styles.button}
                   onPress={handleSubmit}
