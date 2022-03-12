@@ -115,7 +115,7 @@ export const RequestCard = ({
           <Text status="success">Accept</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled
+          disabled={handlingRequest}
           onPress={() => {
             handleReject(item.id);
           }}>
