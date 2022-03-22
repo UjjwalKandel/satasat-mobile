@@ -48,7 +48,7 @@ const SignUpScreen = ({navigation}) => {
       .matches(/(\w.+\s).+/, 'Enter at least 2 names')
       .required('Full name is required'),
     user_name: yup.string().required('Username is required'),
-    phone_number: yup
+    phone: yup
       .string()
       .matches(/(\d){10}\b/, 'Enter a valid phone number')
       .required('Phone number is required'),
@@ -92,7 +92,7 @@ const SignUpScreen = ({navigation}) => {
             full_name: '',
             user_name: '',
             email: '',
-            phone_number: '',
+            phone: '',
             password: '',
             confirm_password: '',
             gender: '',
@@ -130,7 +130,7 @@ const SignUpScreen = ({navigation}) => {
               />
               <Field
                 component={CustomInput}
-                name="phone_number"
+                name="phone"
                 placeholder="Phone Number"
                 keyboardType="numeric"
               />

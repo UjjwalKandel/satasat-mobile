@@ -21,9 +21,12 @@ export const ReturnRequestCard = ({
   const handleAccept = async () => {
     try {
       setHandlingRequest(true);
-      const {data} = await axios.post(`/lend/return-requests/${lendDetailsId}`, {
-        accept_request: true,
-      });
+      const {data} = await axios.post(
+        `/lend/return-requests/${lendDetailsId}`,
+        {
+          accept_request: true,
+        },
+      );
       ToastAndroid.show(data.message, ToastAndroid.SHORT);
       setRequestHandledTrue();
     } catch (error) {
@@ -37,9 +40,12 @@ export const ReturnRequestCard = ({
   const handleReject = async () => {
     try {
       setHandlingRequest(true);
-      const {data} = await axios.post(`/lend/return-requests/${lendDetailsId}`, {
-        accept_request: false,
-      });
+      const {data} = await axios.post(
+        `/lend/return-requests/${lendDetailsId}`,
+        {
+          accept_request: false,
+        },
+      );
       ToastAndroid.show(data.message, ToastAndroid.SHORT);
       setRequestHandledTrue();
     } catch (error) {
@@ -115,7 +121,7 @@ export const ReturnRequestCard = ({
           <Text status="success">Accept</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          disabled
+          disabled={handlingRequest}
           onPress={() => {
             handleReject(item.id);
           }}>
